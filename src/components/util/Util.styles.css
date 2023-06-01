@@ -1,0 +1,13 @@
+.modaltextheader {
+    margin-left: 270px;
+    color: rgb(31, 43, 7);
+    font-weight: bold;
+
+}
+
+
+.modaltextbody {
+    margin-left: 270px;
+    color: green;
+    font-weight: normal;
+}

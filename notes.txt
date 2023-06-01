@@ -1,0 +1,17 @@
+npx create-react-app supremeshop-ui --template typescript
+
+
+
+
+
+If you are using React.ChangeEvent this way
+(e: React.ChangeEvent<HTMLInputElement>)
+Please note that in your HTML code you should NOT call your function like this:
+onChange={(e) => searchInput(e)}
+Instead call it this way:
+onChange={searchInput}
+
+Redux Toolkit installation
+--------------------------------------------
+npm install @reduxjs/toolkit react-redux redux-logger redux-thunk
+npm install @types/react-redux @types/redux-logger @types/redux-thunk

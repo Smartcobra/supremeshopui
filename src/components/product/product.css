@@ -1,0 +1,5 @@
+.landing-page {
+    background: white url("../../assets/images/productHomePage.jpg") no-repeat scroll center;
+    height: 100vh;
+    background-size: cover;
+}

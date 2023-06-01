@@ -1,0 +1,25 @@
+.card-header {
+    background: rgb(240, 229, 128);
+    height: 5vh;
+    text-align: center;
+
+}
+
+.mr-l {
+    margin-left: 500px;
+}
+
+.searchbarc {
+    width: 500px !important;
+}
+
+Table thead {
+    position: sticky;
+    top: 0px;
+    margin: 0 0 0 0;
+}
+
+.theadcolor {
+    color: rgb(238, 238, 214);
+    background-color: rgb(90, 84, 28);
+}
