@@ -1,0 +1,56 @@
+th {
+    background-color: rgb(10, 10, 29);
+    color: rgb(69, 73, 12);
+}
+
+table.table tr th {
+    background-color: rgb(1, 1, 20) !important;
+    color: white !important;
+}
+
+.card-title {
+    color: rgb(90, 97, 27) !important;
+
+
+}
+
+.skill-bar {
+    margin-bottom: 10px;
+}
+
+.skill-bar-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.skill-bar-progress {
+    background-color: #3f0c0c;
+    height: 10px;
+    width: 20rem;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.skill-bar-progress-fill {
+    background-color: #cdda1f;
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+.skill-bar-progress-fill-green {
+    background-color: #1e7731;
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+.skill-bar-progress-fill-orange {
+    background-color: #f1880f;
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+.skill-bar-progress-fill-blue {
+    background-color: #244fdf;
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}

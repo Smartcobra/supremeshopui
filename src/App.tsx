@@ -1,7 +1,7 @@
 import "./App.css";
 import Brand from "./components/brand/Brand";
 import Category from "./components/category/Category";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/home/HomePage";
 import Profile from "./components/auth/Profile";
 import Login from "./components/auth/login";
 import CustomNavbar from "./components/layout/CustomNavbar";
