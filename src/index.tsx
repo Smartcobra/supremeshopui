@@ -7,13 +7,14 @@ import reportWebVitals from "./reportWebVitals";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
 import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+//import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
+import "../node_modules/react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
+import "../node_modules/react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   // <React.StrictMode>
   //   <App />

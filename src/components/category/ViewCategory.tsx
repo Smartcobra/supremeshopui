@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { AppDispatch, RootState, useAppDispatch } from "../../redux/store";
@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 import { TbEdit } from "react-icons/tb";
 import { AiFillDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory from "react-bootstrap-table2-paginator";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 
 const ViewCategory: React.FC = () => {
   const dispatch: AppDispatch = useAppDispatch();
@@ -18,23 +21,114 @@ const ViewCategory: React.FC = () => {
     return state[categoryReducer.categoryFeatureKey];
   });
 
-  const { loading, categories } = categoryReduxState;
-
-  let getAvailable = (arg: boolean) => {
-    if (arg === true) {
-      return "Available";
-    } else {
-      return "Not Available";
-    }
-  };
+  const { categories } = categoryReduxState;
 
   useEffect(() => {
     dispatch(categoryAction.getAllCategoryAction());
   }, []);
 
+  const columns = [
+    {
+      dataField: "categoryId",
+      text: "ID",
+      style: {
+        fontWeight: "bold",
+        fontSize: "18px",
+      },
+
+      headerStyle: {
+        width: "80px",
+      },
+    },
+    {
+      dataField: "categoryName",
+      text: "Name",
+    },
+    {
+      dataField: "categoryAlias",
+      text: "Alias",
+    },
+    {
+      dataField: "parentCategoryId",
+      text: "Parent ID",
+      headerStyle: {
+        width: "100px",
+      },
+    },
+    {
+      dataField: "categoryActive",
+      text: "Status",
+      // formatter: statusFormatter,
+      formatter: (cell: any) => {
+        return cell ? "Available" : "Not Available";
+      },
+      headerStyle: {
+        width: "120px",
+      },
+    },
+    {
+      dataField: "actions",
+      text: "Actions",
+      formatter: actionFormatter,
+      headerStyle: {
+        width: "170px",
+      },
+    },
+  ];
+
+  const deleteCategory = (categoryId: string) => {
+    console.log("Delete");
+    console.log(categoryId + typeof categoryId + "----------");
+    dispatch(categoryAction.deleteCategoryByIdAction({ catId: categoryId })).then((response: any) => {
+      if (response && !response.error) {
+        console.log("Category delete succesfully");
+        deleteRecordWithId();
+      }
+    });
+  };
+
+  const deleteRecordWithId = () => {
+    dispatch(categoryAction.getAllCategoryAction());
+  };
+
+  ///// replaced by  line 61
+  // function statusFormatter(cell: any, row: any, rowIndex: any, formatExtraData: any) {
+  //   return cell ? "Available" : "Not Available";
+  // }
+
+  // const rowEvents = {
+  //   onClick: (e: any, row: any, rowIndex: any) => {
+  //     console.log(`clicked on row with index: ${rowIndex}`);
+  //   },
+  // };
+
+  function actionFormatter(cell: any, row: any, rowIndex: any, formatExtraData: any) {
+    return (
+      <div style={{ textAlign: "center", cursor: "pointer", lineHeight: "normal" }}>
+        <Button onClick={() => navigate(`/editcategory/${row.categoryId}`)} variant="outline-warning">
+          <TbEdit />
+        </Button>{" "}
+        <Button onClick={() => deleteCategory(row.categoryId)} variant="outline-danger">
+          <AiFillDelete />
+        </Button>
+      </div>
+    );
+  }
+
+  const options = {
+    // pageStartIndex: 0,
+    sizePerPage: 13,
+    hideSizePerPage: true,
+    hidePageListOnlyOnePage: true,
+  };
+
+  // const { SearchBar } = Search;
+
   return (
-    <Container className="mt-3">
-      <Row>
+    <>
+      <Container className="mt-3">
+        <BootstrapTable keyField="categoryId" data={categories} columns={columns} pagination={paginationFactory(options)} />
+        {/* <Row>
         <Col xs={10}>
           <Card className="shadow-lg">
             <Card.Header className="bg-dark text-white">
@@ -80,8 +174,9 @@ const ViewCategory: React.FC = () => {
             </Card.Body>
           </Card>
         </Col>
-      </Row>
-    </Container>
+      </Row> */}
+      </Container>
+    </>
   );
 };
 

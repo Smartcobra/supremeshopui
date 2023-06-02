@@ -7,9 +7,9 @@ export const loginUserAction: any = createAsyncThunk(
   async (payload: { user: IAuthModel }, { rejectWithValue }): Promise<{ data: IResponseBody } | any> => {
     try {
       const { user } = payload; /// destrucring concept
-      console.log("paylod", payload);
-      console.log("paylod", payload.user.userName);
-      console.log("paylod", payload.user.password);
+      // console.log("paylod", payload);
+      // console.log("paylod", payload.user.userName);
+      // console.log("paylod", payload.user.password);
       let response = await AuthService.getToken(user); //// the o
       return response.data;
     } catch (err: any) {
@@ -26,10 +26,10 @@ export const logoutUserAction: any = createAsyncThunk(
   async (payload: { userLogout: Ilogout }, { rejectWithValue }): Promise<{ data: string } | any> => {
     try {
       const { userLogout } = payload;
-      console.log(payload.userLogout.token_type_hint, "---------------------------------------");
-      console.log(payload.userLogout.token, "---------------------------------------");
+      // console.log(payload.userLogout.token_type_hint, "---------------------------------------");
+      // console.log(payload.userLogout.token, "---------------------------------------");
       let response = await AuthService.removeToken(userLogout); //// the o
-      console.log("------------logout-----------", response.data);
+      // console.log("------------logout-----------", response.data);
       return response.data;
     } catch (err: any) {
       if (!err.response) {

@@ -24,4 +24,15 @@ export class CategoryService {
     console.log("in service", catId);
     return axios.get(`${this.getCatUrl}/${catId}`);
   }
+
+  public static updateCategory(categoryModel: ICategoryModel): Promise<{ data: any }> {
+    console.log("zssadasd----categoryModel", JSON.stringify(categoryModel));
+    return axios.put(this.createCatUrl, categoryModel);
+  }
+
+  public static deleteCategoryById(catId: number): Promise<{ data: any }> {
+    console.log("in delete service", typeof catId);
+    console.log("in delete service", catId);
+    return axios.delete(`${this.getCatUrl}/${catId}`);
+  }
 }

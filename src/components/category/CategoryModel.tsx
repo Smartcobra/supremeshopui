@@ -12,3 +12,11 @@ export interface ICategoryRsponse {
   parentCategoryId: number;
   categoryActive: boolean;
 }
+
+export interface IEditCategoryRequest {
+  categoryId: number;
+  categoryName: string;
+  categoryAlias: string;
+  parentCategoryId: number;
+  categoryActive: boolean;
+}

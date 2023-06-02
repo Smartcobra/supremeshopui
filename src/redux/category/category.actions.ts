@@ -8,10 +8,10 @@ export const createCategoryAction: any = createAsyncThunk(
   async (payload: { category: ICategoryModel }, { rejectWithValue }): Promise<any> => {
     try {
       if (AuthUtil.isSetTokenToRequestHeader()) {
-        console.log("------------------------------------inside category action");
+        // console.log("------------------------------------inside category action");
         const { category } = payload;
-        console.log("paylod is-----", payload);
-        console.log("zssadasd----categoryModel", JSON.stringify(category));
+        // console.log("paylod is-----", payload);
+        // console.log("zssadasd----categoryModel", JSON.stringify(category));
         let response = await CategoryService.createCategory(category);
         return response.data;
       }
@@ -42,7 +42,7 @@ export const getAllCategoryAction: any = createAsyncThunk(
     }
   }
 );
-
+/// get by Id
 export const getCategoryByIdAction: any = createAsyncThunk(
   "category/getCategoryByIdAction",
   async (payload: { catId: string }, { rejectWithValue }): Promise<{ data: ICategoryRsponse[] } | any> => {
@@ -54,6 +54,50 @@ export const getCategoryByIdAction: any = createAsyncThunk(
         let response = await CategoryService.getCategoryById(catid);
         console.log("getCategoryByIdAction----", response);
         console.log("getCategoryByIdAction----", response.data);
+        return response.data;
+      }
+    } catch (err: any) {
+      if (!err.response) {
+        throw err;
+      }
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+////update Category
+export const updateCategoryAction: any = createAsyncThunk(
+  "category/updateCategoryAction",
+  async (payload: { category: ICategoryModel }, { rejectWithValue }): Promise<any> => {
+    try {
+      if (AuthUtil.isSetTokenToRequestHeader()) {
+        console.log("----------Update--------------------------inside category action");
+        const { category } = payload;
+        console.log("paylod is---Update--", payload);
+        console.log("Update----categoryModel", JSON.stringify(category));
+        let response = await CategoryService.updateCategory(category);
+        return response.data;
+      }
+    } catch (err: any) {
+      if (!err.response) {
+        throw err;
+      }
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+////// delete Category
+export const deleteCategoryByIdAction: any = createAsyncThunk(
+  "category/deleteCategoryByIdAction",
+  async (payload: { catId: string }, { rejectWithValue }): Promise<{ data: any } | any> => {
+    try {
+      const { catId } = payload;
+      let catid: number = Number(payload.catId);
+      console.log("--------delete------", catid);
+      if (AuthUtil.isSetTokenToRequestHeader()) {
+        let response = await CategoryService.deleteCategoryById(catid);
+        console.log("deleteCategoryByIdAction----", response);
+        console.log("deleteCategoryByIdAction----", response.data);
         return response.data;
       }
     } catch (err: any) {

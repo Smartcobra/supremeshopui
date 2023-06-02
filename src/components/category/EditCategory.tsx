@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { ICategoryModel } from "./CategoryModel";
-import { useParams } from "react-router-dom";
+import { ICategoryModel, IEditCategoryRequest } from "./CategoryModel";
+import { useNavigate, useParams } from "react-router-dom";
 import * as categoryEditReducer from "../../redux/category/category.reducer";
 import * as categoryEditAction from "../../redux/category/category.actions";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import ShowModal from "../util/ShowModal";
 
 const EditCategory: React.FC = () => {
   const disPatch = useDispatch();
   const { catId } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const navigate = useNavigate();
 
   //get categories data from redux
   const categoryReduxState: categoryEditReducer.InitialState = useSelector((state: RootState) => {
     return state[categoryEditReducer.categoryFeatureKey];
   });
 
-  const { loading, categoryModel: reduxStateModel } = categoryReduxState; //reduxStateModel : if will not give will complain because we are using same key for setCategoryModel
+  const { loading, editCategoryModel: reduxStateModel } = categoryReduxState; //reduxStateModel : if will not give will complain because we are using same key for setCategoryModel
 
-  const [categoryModel, setCategoryModel] = useState<ICategoryModel>({
+  const [categoryModel, setCategoryModel] = useState<IEditCategoryRequest>({
+    categoryId: 0,
     categoryName: "",
     categoryAlias: "",
     parentCategoryId: 0,
@@ -31,8 +36,9 @@ const EditCategory: React.FC = () => {
     if (catId) {
       disPatch(categoryEditAction.getCategoryByIdAction(catId))
         .then((response: any) => {
+          console.log("response payload", response.payload);
           if (response && !response.error) {
-            console.log("category update failed::");
+            console.log("Category with id " + response.payload.categoryId);
           }
         })
         .catch((err: any) => {});
@@ -41,21 +47,60 @@ const EditCategory: React.FC = () => {
 
   //set Redux State to local state
   useEffect(() => {
+    console.log("before if-------useEffect----setvalues", catId);
+    console.log("before if-------useEffect----reduxStateModel---", reduxStateModel);
     if (reduxStateModel && Object.keys(reduxStateModel).length > 0) {
+      console.log("useEffect----setvalues", catId);
       setCategoryModel({
         ...categoryModel,
+        categoryId: reduxStateModel.categoryId,
         categoryName: reduxStateModel.categoryName,
         categoryAlias: reduxStateModel.categoryAlias,
         parentCategoryId: reduxStateModel.parentCategoryId,
         categoryActive: reduxStateModel.categoryActive,
       });
+
+      console.log("useEffect----setvalues", categoryModel.categoryName);
     }
   }, [reduxStateModel]);
 
-  const updateInput = (event: React.ChangeEvent<HTMLInputElement>) => {};
+  const updateInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name == "categoryActive") {
+      setCategoryModel({
+        ...categoryModel,
+        [event.target.name]: event.target.checked,
+      });
+    } else if (event.target.name == "parentCategoryId") {
+      setCategoryModel({
+        ...categoryModel,
+        [event.target.name]: +event.target.value, // + is used to converting string to number
+      });
+    } else {
+      setCategoryModel({
+        ...categoryModel,
+        [event.target.name]: event.target.value,
+      });
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("category::", categoryModel);
+    disPatch(categoryEditAction.updateCategoryAction({ category: categoryModel }))
+      .then((response: any) => {
+        if (response && !response.error) {
+          console.log("response---------", response);
+          console.log("response---------", response.payload.responseMessage);
+          setIsModalOpen(true);
+          setModalContent(response.payload.responseMessage);
+        }
+      })
+      .catch((err: any) => {});
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    navigate("/viewcategory");
   };
 
   return (
@@ -102,6 +147,7 @@ const EditCategory: React.FC = () => {
           </Card>
         </div>
       </Container>
+      <ShowModal isOpen={isModalOpen} onRequestClose={closeModal} content={modalContent} headername="Update Category" />
     </>
   );
 };
