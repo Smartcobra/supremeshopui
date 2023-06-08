@@ -2,8 +2,11 @@ import axios from "axios";
 import { ICategoryModel, ICategoryRsponse } from "./CategoryModel";
 
 export class CategoryService {
-  private static createCatUrl: string = "http://localhost:5016/categories";
-  private static getCatUrl: string = "http://localhost:5016/categories";
+  // private static createCatUrl: string = "http://localhost:5016/categories";
+  // private static getCatUrl: string = "http://localhost:5016/categories";
+
+  private static createCatUrl: string = "http://localhost:5012/gateway-catg-sv/categories";
+  private static getCatUrl: string = "http://localhost:5012/gateway-catg-sv/categories";
   /**
        @usage : to get all contacts
        @method : POST

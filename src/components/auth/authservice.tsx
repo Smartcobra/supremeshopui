@@ -2,8 +2,11 @@ import axios from "axios";
 import { IAuthModel, IResponseBody, Ilogout } from "./usermodel";
 
 export class AuthService {
-  private static loginUrl: string = "http://localhost:5022/users/token";
-  private static logoutUrl: string = "http://localhost:5022/users/logout";
+  // private static loginUrl: string = "http://localhost:5022/users/token";
+  //private static logoutUrl: string = "http://localhost:5022/users/logout";
+  private static loginUrl: string = "http://3.7.96.250:5022/users/token";
+  private static logoutUrl: string = "http://3.7.96.250:5022/users/logout";
+
   /**
      @usage : to get all contacts
      @method : POST
