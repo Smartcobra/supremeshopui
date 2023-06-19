@@ -9,10 +9,9 @@ import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import * as userActions from "./../../redux/users/user.actions";
-import { Ilogout } from "../auth/usermodel";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { MdOutlineStorage } from "react-icons/md";
+import { ImSearch } from "react-icons/im";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
@@ -30,17 +29,17 @@ const CustomNavbar: React.FC<IProps> = (props) => {
 
   const { user: userReduxState } = userState;
 
-  const tokenConst = TokenUtil.getToken();
-  console.log("token-logout", tokenConst);
-  const [logOutModel, setLogOutModel] = useState({ token_type_hint: "access_token", token: tokenConst });
-  console.log("token_type_hint---beforeset--state", logOutModel.token_type_hint);
-  console.log("token-logout---beforeset--state", logOutModel.token);
+  const access_token = TokenUtil.getToken();
+  const refresh_token = TokenUtil.getRefreshToken();
+  console.log("token-logout", access_token);
+  //const [logOutModel, setLogOutModel] = useState({ access_token: access_token, refresh_token: refresh_token });
+  const logOutModel = { access_token: access_token, refresh_token: refresh_token };
+  //console.log("refreshToken---beforeset--state", logOutModel.refresh_token);
+  // console.log("token-logout---beforeset--state", logOutModel.access_token);
 
   const clickLogOff = () => {
     console.log("hit in clicklogoff------------------------------------------------");
-    setLogOutModel({ token_type_hint: "access_token", token: tokenConst });
-    console.log("token_type_hint--after---state", logOutModel.token_type_hint);
-    console.log("token-logout---after--state", logOutModel.token);
+    // setLogOutModel({ access_token: access_token, refresh_token: refresh_token });
     dispatch(userActions.logoutUserAction({ userLogout: logOutModel }))
       .then((response: any) => {
         if (response && !response.error) {
@@ -50,8 +49,6 @@ const CustomNavbar: React.FC<IProps> = (props) => {
       .catch((err: any) => {});
   };
 
-  const clickSignIn = () => {};
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -59,7 +56,7 @@ const CustomNavbar: React.FC<IProps> = (props) => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="warning" variant="warning">
         <Container fluid>
           <Navbar.Brand href="/">{props.heading}</Navbar.Brand>
           <Nav className="me-auto">
@@ -68,8 +65,8 @@ const CustomNavbar: React.FC<IProps> = (props) => {
             </Nav.Link>
             <InputGroup className="mb-1 mt-1 mr-l">
               <Form.Control type="text" placeholder="Search Here" className="searchbarc" />
-              <Button variant="outline-warning" id="button-addon2">
-                <i className="bi bi-search"></i>
+              <Button variant="outline-dark" id="button-search">
+                <ImSearch></ImSearch>
               </Button>
             </InputGroup>
           </Nav>
@@ -85,12 +82,12 @@ const CustomNavbar: React.FC<IProps> = (props) => {
                     </Nav.Item>
                   )}
 
-                  <Button variant="outline-warning" onClick={clickLogOff}>
-                    logout
+                  <Button variant="outline-dark" onClick={clickLogOff}>
+                    <b>logout</b>
                   </Button>
                 </>
               ) : (
-                <Button onClick={() => navigate("/user/login")} variant="outline-light">
+                <Button onClick={() => navigate("/user/login")} variant="outline-dark">
                   Hello, Sign in
                 </Button>
                 // <Nav.Link href="/user/login"> Hello, Login</Nav.Link>
@@ -107,7 +104,11 @@ const CustomNavbar: React.FC<IProps> = (props) => {
                 <i className="bi bi-sliders2"></i>
               </Navbar.Brand>
               <Nav className="me-auto">
-                <Nav.Link href="/addproduct">Product</Nav.Link>
+                <NavDropdown title="Product" id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="/addproduct">Create Product</NavDropdown.Item>
+                  <NavDropdown.Item href="/products">View Product</NavDropdown.Item>
+                </NavDropdown>
+
                 <Nav.Link href="/addbrand">Brand</Nav.Link>
                 <NavDropdown title="Category" id="collasible-nav-dropdown">
                   <NavDropdown.Item href="/addcategory">Create Category</NavDropdown.Item>

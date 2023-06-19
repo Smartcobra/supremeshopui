@@ -54,3 +54,15 @@ table.table tr th {
     height: 100%;
     transition: width 0.5s ease-in-out;
 }
+
+
+.homebutton.btn {
+    padding: 3px 30px !important;
+    background-color: rgb(51, 57, 71) !important;
+    color: aliceblue !important;
+}
+
+.homebutton:hover {
+    background-color: yellow !important;
+    color: rgb(51, 57, 71) !important;
+}

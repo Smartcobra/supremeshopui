@@ -5,13 +5,18 @@ import HomePage from "./components/home/HomePage";
 import Profile from "./components/auth/Profile";
 import Login from "./components/auth/login";
 import CustomNavbar from "./components/layout/CustomNavbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import ProductList from "./components/product/ProductList";
 import ProductDetails from "./components/product/ProductDetails";
 import CreateProduct from "./components/product/CreateProduct";
 import Help from "./components/util/Help";
 import ViewCategory from "./components/category/ViewCategory";
 import EditCategory from "./components/category/EditCategory";
+import { AppDispatch, RootState, useAppDispatch } from "../src/redux/store";
+import * as productReducer from "../src/redux/product/product.reducer";
+import { useSelector } from "react-redux";
+
+//currentPage, fields, setFieldValue, setPage
 
 const App: React.FC = () => {
   return (
@@ -24,7 +29,7 @@ const App: React.FC = () => {
           <Route path={"/user/profile"} element={<Profile />} />
           <Route path={"/addproduct"} element={<CreateProduct />} />
           <Route path={"/products"} element={<ProductList />} />
-          <Route path={"/product/:productId"} element={<ProductDetails />} />
+          {/* <Route path={"/product/:productId"} element={<ProductDetails />} /> */}
           <Route path={"/addbrand"} element={<Brand />} />
           <Route path={"/addcategory"} element={<Category />} />
           <Route path={"/viewcategory"} element={<ViewCategory />} />

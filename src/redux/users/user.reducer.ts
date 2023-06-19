@@ -8,7 +8,8 @@ export interface InitialState {
   loading: boolean;
   errorMessage: string | null;
   user: IAuthModel;
-  token: string | null;
+  access_token: string | null;
+  refresh_token: string | null;
   isAuthenticated: boolean;
 }
 
@@ -16,7 +17,8 @@ const initialState: InitialState = {
   loading: false,
   errorMessage: null,
   user: {} as IAuthModel,
-  token: null,
+  access_token: null,
+  refresh_token: null,
   isAuthenticated: false,
 };
 
@@ -39,20 +41,22 @@ export const userSlice = createSlice({
       })
       .addCase(userActions.loginUserAction.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("payload", action.payload, "------");
+        console.log("userpayload", action.payload, "------");
 
         if (action.payload.access_token) {
           state.user = action.payload.user;
-          state.token = action.payload.access_token;
+          state.access_token = action.payload.access_token;
+          state.refresh_token = action.payload.refresh_token;
           state.isAuthenticated = true;
           TokenUtil.saveTokenToSession(action.payload.access_token);
+          TokenUtil.saveRefreshTokenToSession(action.payload.refresh_token);
         }
       })
       .addCase(userActions.loginUserAction.rejected, (state, action) => {
         state.loading = false;
         if (isRejectedWithValue(action)) {
           state.user = {} as IAuthModel;
-          state.token = null;
+          state.access_token = null;
           state.isAuthenticated = true;
           TokenUtil.removeTokenFromSession();
           state.errorMessage = action.payload;

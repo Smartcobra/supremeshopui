@@ -1,11 +1,5 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(232, 236, 240) !important;
+  background-color: #344955 !important;
 }
 
 code {
@@ -15,9 +9,18 @@ code {
 
 .navbarheight {
   height: 35px !important;
-  background-color: black;
+  background-color: #f7b24c;
 }
 
 .navbarFont {
-  color: white !important;
+  color: rgb(27, 2, 2) !important;
+}
+
+.nav-link {
+  color: #344955 !important;
+  font-weight: bold !important;
+}
+
+.navbar-brand {
+  font-weight: bold !important;
 }

@@ -16,13 +16,12 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Container style={{ marginTop: "1rem", marginLeft: "3rem" }}>
-        <Card style={{ width: "110rem", height: "10rem" }}>
+        <Card style={{ width: "110rem", height: "7rem" }}>
           <Card.Body>
             <Row>
               <Col xs={2}>
                 <Card.Title className="card-title">Supreme Shop</Card.Title>
               </Col>
-
               <Col xs={1}></Col>
               <Col xs={2}>
                 <FcSalesPerformance />
@@ -36,7 +35,6 @@ const HomePage: React.FC = () => {
                 <AiFillLike />
               </Col>
             </Row>
-
             <Row>
               <Col xs={1}>
                 <EarningsSkillBar name="Earnings" level={80} backgroundcolor="skill-bar-progress-fill" />
@@ -78,9 +76,8 @@ const HomePage: React.FC = () => {
           </Col>
         </Row>
       </Container>
-
       <Container style={{ marginTop: "1rem", marginLeft: "3rem" }}>
-        <Card style={{ width: "110rem", height: "12rem" }}>
+        <Card style={{ width: "110rem", height: "15rem" }}>
           <Card.Body>
             <Table striped>
               <thead>
@@ -106,9 +103,11 @@ const HomePage: React.FC = () => {
                   <td>11900.12</td>
                   <td>$ 1597.89</td>
                   <td>0.023</td>
-                  <Button variant="outline-success" size="sm">
-                    Accept
-                  </Button>{" "}
+                  <td>
+                    <Button className="homebutton" variant="homebutton">
+                      Accept
+                    </Button>
+                  </td>
                 </tr>
                 <tr>
                   <td>1</td>
@@ -119,9 +118,11 @@ const HomePage: React.FC = () => {
                   <td>11900.12</td>
                   <td>$ 1597.89</td>
                   <td>0.023</td>
-                  <Button variant="outline-success" size="sm">
-                    Accept
-                  </Button>{" "}
+                  <td>
+                    <Button className="homebutton" variant="homebutton">
+                      Accept
+                    </Button>
+                  </td>
                 </tr>
                 <tr>
                   <td>1</td>
@@ -132,9 +133,11 @@ const HomePage: React.FC = () => {
                   <td>11900.12</td>
                   <td>$ 1597.89</td>
                   <td>0.023</td>
-                  <Button variant="outline-success" size="sm">
-                    Accept
-                  </Button>{" "}
+                  <td>
+                    <Button className="homebutton" variant="homebutton">
+                      Accept
+                    </Button>
+                  </td>
                 </tr>
               </tbody>
             </Table>

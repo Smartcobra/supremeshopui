@@ -88,10 +88,12 @@ const Category: React.FC = () => {
         <Row>
           <Col xs={9}>
             <div className="container-flex">
-              <Card border="warning border-4" style={{ width: "40rem" }}>
-                <Card.Header className="card-header" as="h5">
-                  Create Category
-                </Card.Header>
+              <Card className="text-center" style={{ width: "50rem", marginBottom: "4px", height: "4rem" }}>
+                <Card.Body>
+                  <h1>CREATE CATEGORY</h1>
+                </Card.Body>
+              </Card>
+              <Card style={{ width: "50rem" }}>
                 <Card.Body>
                   <Form id="myForm" className="form" onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicCatname">
