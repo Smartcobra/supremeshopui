@@ -1,5 +1,16 @@
 import { PayloadAction, createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
-import { IBrand, ICategory, IImageAndPrice, IProduct, IProductRequest } from "../../components/product/ProductModel";
+import {
+  IBrand,
+  ICategory,
+  IClothDetails,
+  IImageAndPrice,
+  ILaptopDetails,
+  IMobileDetails,
+  IProduct,
+  IProductRequest,
+  ISmartWatchDetails,
+  ITVDetails,
+} from "../../components/product/ProductModel";
 import { RootState } from "../store";
 import * as productAction from "./product.action";
 
@@ -14,12 +25,13 @@ export interface InitialState {
   token: string | null;
   page: number;
   data: {
-    page1: ICategory;
-    page2: IBrand;
-    page3: IProduct;
-    page4: IImageAndPrice;
+    categoryDtls: ICategory;
+    brandDtls: IBrand;
+    productDtls: IProduct;
+    productCompleteDtls: IClothDetails | ILaptopDetails | ISmartWatchDetails | IMobileDetails | ITVDetails;
+    imageAndPriceDtls: IImageAndPrice;
   };
-  productRequest: IProductRequest;
+  //productRequest: IProductRequest;
   submitting: boolean;
   submitted: boolean;
 }
@@ -31,16 +43,16 @@ const initialState: InitialState = {
   token: null,
   page: 1,
   data: {
-    page1: {
+    categoryDtls: {
       categoryName: "",
       categoryAlias: "",
       categoryStatus: "",
     },
-    page2: {
+    brandDtls: {
       brandName: "",
       brandLogo: null,
     },
-    page3: {
+    productDtls: {
       productName: "",
       productAlias: "",
       shortDescription: "",
@@ -48,7 +60,8 @@ const initialState: InitialState = {
       productType: "",
       productIMEI: "",
     },
-    page4: {
+    productCompleteDtls: {} as ILaptopDetails | {} as IClothDetails | {} as ISmartWatchDetails | {} as ITVDetails | {} as IMobileDetails,
+    imageAndPriceDtls: {
       productprice: 0,
       productStatus: "",
       imagePath0ne: null,
@@ -58,7 +71,7 @@ const initialState: InitialState = {
       imagePathFive: null,
     },
   },
-  productRequest: {} as IProductRequest,
+  // productRequest: {} as IProductRequest,
   submitting: false,
   submitted: false,
 };
@@ -74,6 +87,15 @@ export const productSlice = createSlice({
       state.page -= 1;
     },
 
+    updatePage4Field<T extends keyof InitialState["data"]>(
+      state: RootState,
+      // action: PayloadAction<{ page: T; field: keyof ProductFormState["data"][T]; value: ProductFormState["data"][T][keyof ProductFormState["data"][T]] }>
+      action: PayloadAction<{ page: T; field: any; value: any }>
+    ) {
+      const { page, field, value } = action.payload;
+      state.data[page][field] = value;
+    },
+
     updateField<T extends keyof InitialState["data"]>(
       state: RootState,
       // action: PayloadAction<{ page: T; field: keyof ProductFormState["data"][T]; value: ProductFormState["data"][T][keyof ProductFormState["data"][T]] }>
@@ -81,10 +103,16 @@ export const productSlice = createSlice({
     ) {
       const { page, field, value } = action.payload;
       state.data[page][field] = value;
-      state.productRequest.category = state.data.page1;
-      state.productRequest.brand = state.data.page2;
-      state.productRequest.product = state.data.page3;
-      state.productRequest.imageAndPrice = state.data.page4;
+      // const keyField = field;
+      // state.productRequest.category = state.data.page1;
+      // state.productRequest.brand = state.data.page2;
+      // state.productRequest.product = state.data.page3;
+      // state.productRequest.product = state.data.page3;
+      // if (keyField == "laptopDetails") {
+      //   console.log("inside If", keyField);
+      //   state.productRequest.productDetails = state.data.page4[keyField];
+      // }
+      // state.productRequest.imageAndPrice = state.data.page5;
     },
   },
   extraReducers: (builder) => {
@@ -96,10 +124,11 @@ export const productSlice = createSlice({
         state.submitting = false;
         state.submitted = true;
         state.page = 1;
-        state.data.page1 = initialState.data.page1;
-        state.data.page2 = initialState.data.page2;
-        state.data.page3 = initialState.data.page3;
-        state.data.page4 = initialState.data.page4;
+        state.data.categoryDtls = initialState.data.categoryDtls;
+        state.data.brandDtls = initialState.data.brandDtls;
+        state.data.productDtls = initialState.data.productDtls;
+        state.data.productCompleteDtls = initialState.data.productCompleteDtls;
+        state.data.imageAndPriceDtls = initialState.data.imageAndPriceDtls;
       })
       .addCase(productAction.createProductAction.rejected, (state) => {
         state.submitting = false;
@@ -109,4 +138,4 @@ export const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const { nextPage, previousPage, updateField } = productSlice.actions;
+export const { nextPage, previousPage, updateField, updatePage4Field } = productSlice.actions;

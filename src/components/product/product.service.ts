@@ -16,6 +16,11 @@ export class ProductService {
 
   public static createProduct(productModel: IProductRequest): Promise<{ data: any }> {
     const product = { productRequest: productModel };
+
+    // for (let i = 0; i < files.length; i++) {
+    //   productCreateRequest.append('files', files[i]);
+    // }
+
     console.log("zssadasd----Productmodel", JSON.stringify(product));
     return axios.post(this.createProductUrl, productModel);
   }

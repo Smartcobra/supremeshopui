@@ -11,14 +11,14 @@ import { nextPage, previousPage, updateField } from "../../redux/product/product
 import { IBrand } from "./ProductModel";
 
 interface BrandPage {
-  data: IBrand;
+  brandData: IBrand;
 }
-const BrandDetails: React.FC<BrandPage> = ({ data }) => {
+const BrandDetails: React.FC<BrandPage> = ({ brandData }) => {
   const dispatch = useDispatch();
-  const { brandName, brandLogo } = data;
+  const { brandName, brandLogo } = brandData;
 
   const handleBrandNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateField({ page: "page2", field: "brandName", value: e.target.value }));
+    dispatch(updateField({ page: "brandDtls", field: "brandName", value: e.target.value }));
   };
 
   // const handleBrandLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +28,7 @@ const BrandDetails: React.FC<BrandPage> = ({ data }) => {
   const handleBrandLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files ? event.target.files[0] : null;
-      dispatch(updateField({ page: "page2", field: "brandLogo", value: file }));
+      dispatch(updateField({ page: "brandDtls", field: "brandLogo", value: file }));
     }
   };
 

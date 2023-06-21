@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
 import { nextPage, previousPage, updateField } from "../../redux/product/product.reducer";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import { Container, Col, Row, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import { IProduct } from "./ProductModel";
 
 interface ProductPage {
-  data: IProduct;
+  productData: IProduct;
 }
 
-const ProductDetails: React.FC<ProductPage> = ({ data }) => {
+const ProductDetails: React.FC<ProductPage> = ({ productData }) => {
   const dispatch = useDispatch();
-  const { productName, productAlias, productType, fullDescription, productIMEI, shortDescription } = data;
+  const { productName, productAlias, productType, fullDescription, productIMEI, shortDescription } = productData;
 
   const handleNextPage = () => {
     dispatch(nextPage());
@@ -26,30 +23,30 @@ const ProductDetails: React.FC<ProductPage> = ({ data }) => {
   };
 
   const handleProductNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateField({ page: "page3", field: "productName", value: e.target.value }));
+    dispatch(updateField({ page: "productDtls", field: "productName", value: e.target.value }));
   };
 
   const handleProductAliasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // dispatch(updateField({ page: "page1", field: "categoryAlias", value: Number(e.target.value) }));
-    dispatch(updateField({ page: "page3", field: "productAlias", value: e.target.value }));
+    dispatch(updateField({ page: "productDtls", field: "productAlias", value: e.target.value }));
   };
 
   const handleProductTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateField({ page: "page3", field: "productType", value: e.target.value }));
+    dispatch(updateField({ page: "productDtls", field: "productType", value: e.target.value }));
   };
 
   const handleProductShortDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // dispatch(updateField({ page: "page1", field: "categoryAlias", value: Number(e.target.value) }));
-    dispatch(updateField({ page: "page3", field: "shortDescription", value: e.target.value }));
+    dispatch(updateField({ page: "productDtls", field: "shortDescription", value: e.target.value }));
   };
 
   const handleProductFullDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateField({ page: "page3", field: "fullDescription", value: e.target.value }));
+    dispatch(updateField({ page: "productDtls", field: "fullDescription", value: e.target.value }));
   };
 
   const handleProductIMIEChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // dispatch(updateField({ page: "page1", field: "categoryAlias", value: Number(e.target.value) }));
-    dispatch(updateField({ page: "page3", field: "productIMEI", value: e.target.value }));
+    dispatch(updateField({ page: "productDtls", field: "productIMEI", value: e.target.value }));
   };
 
   return (

@@ -12,7 +12,7 @@ import * as productReducer from "../../redux/product/product.reducer";
 import * as productAction from "../../redux/product/product.action";
 
 interface ImageAndPricePage {
-  data: IImageAndPrice;
+  imgData: IImageAndPrice;
 }
 
 type ProductStatusOption = {
@@ -20,17 +20,19 @@ type ProductStatusOption = {
   label: string;
 };
 
-const ImageAndpriceDetails: React.FC<ImageAndPricePage> = ({ data }) => {
+const ImageAndpriceDetails: React.FC<ImageAndPricePage> = ({ imgData }) => {
   const dispatch = useDispatch();
-  const { productprice, productStatus, imagePath0ne, imagePathTwo, imagePathThree, imagePathFour, imagePathFive } = data;
+  const { productprice, productStatus, imagePath0ne, imagePathTwo, imagePathThree, imagePathFour, imagePathFive } = imgData;
 
   const productReduxState: productReducer.InitialState = useSelector((state: RootState) => {
     return state[productReducer.productFeatureKey];
   });
 
-  const { productRequest } = productReduxState;
-  //console.log("datatatatat", data);
-  console.log("dataIImagePagetatatat", productRequest);
+  // const { productRequest } = productReduxState;
+  // console.log("dataIImagePagetatatat", productRequest);
+
+  const { data } = productReduxState;
+  console.log("data to send----------", data);
 
   const [selectedProductStatusOption, setProductStatusSelectedOption] = useState<ProductStatusOption | null>(null);
   const productStatusoptions: ProductStatusOption[] = [
@@ -39,51 +41,51 @@ const ImageAndpriceDetails: React.FC<ImageAndPricePage> = ({ data }) => {
   ];
 
   const handleProductPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateField({ page: "page4", field: "productprice", value: +e.target.value }));
+    dispatch(updateField({ page: "imageAndPriceDtls", field: "productprice", value: +e.target.value }));
   };
 
   const handleCatStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     const productStatusOption = productStatusoptions.find((opt) => opt.value === value) || null;
     setProductStatusSelectedOption(productStatusOption);
-    dispatch(updateField({ page: "page4", field: "productStatus", value: productStatusOption }));
+    dispatch(updateField({ page: "imageAndPriceDtls", field: "productStatus", value: productStatusOption }));
   };
 
   // const handleImagePathOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatch(updateField({ page: "page4", field: "imagepath0ne", value: e.target.value }));
+  //   dispatch(updateField({ page: "page5", field: "imagepath0ne", value: e.target.value }));
   // };
   const handleImagePathOneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files ? event.target.files[0] : null;
-      dispatch(updateField({ page: "page4", field: "imagePath0ne", value: file }));
+      dispatch(updateField({ page: "imageAndPriceDtls", field: "imagePath0ne", value: file }));
     }
   };
 
   const handleImagePathTwoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files ? event.target.files[0] : null;
-      dispatch(updateField({ page: "page4", field: "imagePathTwo", value: file }));
+      dispatch(updateField({ page: "imageAndPriceDtls", field: "imagePathTwo", value: file }));
     }
   };
 
   const handleImagePathThreeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files ? event.target.files[0] : null;
-      dispatch(updateField({ page: "page4", field: "imagePathThree", value: file }));
+      dispatch(updateField({ page: "imageAndPriceDtls", field: "imagePathThree", value: file }));
     }
   };
 
   const handleImagePathFourChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files ? event.target.files[0] : null;
-      dispatch(updateField({ page: "page4", field: "imagePathFour", value: file }));
+      dispatch(updateField({ page: "imageAndPriceDtls", field: "imagePathFour", value: file }));
     }
   };
 
   const handleImagePathFiveChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files ? event.target.files[0] : null;
-      dispatch(updateField({ page: "page4", field: "imagePathFive", value: file }));
+      dispatch(updateField({ page: "imageAndPriceDtls", field: "imagePathFive", value: file }));
     }
   };
 
@@ -92,7 +94,7 @@ const ImageAndpriceDetails: React.FC<ImageAndPricePage> = ({ data }) => {
   };
 
   const handleSubmitForm = () => {
-    dispatch(productAction.createProductAction({ product: productRequest }))
+    dispatch(productAction.createProductAction({ product: data }))
       .then((response: any) => {
         if (response && !response.error) {
           console.log("response-----handleSubmitForm---product-", response);
