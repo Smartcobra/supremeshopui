@@ -7,7 +7,7 @@ import CategoryDetails from "./CategoryDetails";
 import BrandDetails from "./BrandDetails";
 import ProductDetails from "./ProductDetails";
 import * as productReducer from "../../redux/product/product.reducer";
-import ImageAndpriceDetails from "./ImageAndPriceDetails";
+import ImageAndpriceDetails from "./ImageDetails";
 import LaptopProductDetails from "./LaptopProductDetails";
 import MobileProdcutDetails from "./MobileProductDetails";
 import ClothProductDetails from "./ClothProductDetails";
@@ -55,7 +55,8 @@ const CreateProduct: React.FC = () => {
       {page === 2 && <BrandDetails brandData={data.brandDtls} />}
       {page === 3 && <ProductDetails productData={data.productDtls} />}
       {page === 4 && renderPage()}
-      {page === 5 && <ImageAndpriceDetails imgData={data.imageAndPriceDtls} />}
+      {/* {page === 5 && <ImageAndpriceDetails imgData={data.images} />} */}
+      {page === 5 && <ImageAndpriceDetails />}
       {/* <LaptopProductDetails></LaptopProductDetails> */}
     </>
   );

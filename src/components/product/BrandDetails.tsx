@@ -15,20 +15,16 @@ interface BrandPage {
 }
 const BrandDetails: React.FC<BrandPage> = ({ brandData }) => {
   const dispatch = useDispatch();
-  const { brandName, brandLogo } = brandData;
+  const { brandName } = brandData;
 
   const handleBrandNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateField({ page: "brandDtls", field: "brandName", value: e.target.value }));
   };
 
-  // const handleBrandLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatch(updateField({ page: "page2", field: "page2", value: e.target.value }));
-  // };
-
   const handleBrandLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files ? event.target.files[0] : null;
-      dispatch(updateField({ page: "brandDtls", field: "brandLogo", value: file }));
+      //dispatch(updateField({ page: "images", field: "brandLogo", value: file }));
     }
   };
 

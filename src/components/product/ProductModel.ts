@@ -6,21 +6,20 @@ export interface ICategory {
 
 export interface IBrand {
   brandName: string;
-  brandLogo: File | null;
 }
 
 export interface IProduct {
   productName: string;
-  productAlias: string;
+  productQuantity: number;
   shortDescription: string;
   fullDescription: string;
   productType: string;
   productIMEI: string;
+  productPrice: number;
+  productStatus: string;
 }
 
-export interface IImageAndPrice {
-  productprice: number;
-  productStatus: string;
+export interface IImages {
   imagePath0ne: File | null;
   imagePathTwo: File | null;
   imagePathThree: File | null;
@@ -33,7 +32,7 @@ export interface IProductRequest {
   productDetails: any;
   category: ICategory;
   brand: IBrand;
-  imageAndPrice: IImageAndPrice;
+  images: IImages;
 }
 
 export interface IClothDetails {
@@ -126,4 +125,31 @@ export interface IShoeDetails {
   department: string;
   genericName: string;
   shoeSize: string;
+}
+
+export interface ProductDtlRequest {
+  productDetails: IProduct;
+  productDescription: any;
+  category: ICategory;
+  brand: IBrand;
+}
+
+export interface ProductImageRequest {
+  images: IImages;
+}
+
+export interface ProductCreateRequest {
+  productDtlRequest: ProductDtlRequest;
+  productImages: ProductImageRequest;
+}
+
+export interface ProductTableData {
+  productId: string;
+  productName: string;
+  productStatus: string;
+  productPrice: number;
+  productQuantity: number;
+  categoryName: string;
+  brandName: string;
+  productDetails: any;
 }

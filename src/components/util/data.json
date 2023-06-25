@@ -1,0 +1,29 @@
+[
+  {
+    "productId": "64953cded88a7442e43cb23g",
+    "productName": "Product A",
+    "productStatus": "A",
+    "productPrice": 20,
+    "productQuantity": 12,
+    "categoryName": "A",
+    "brandName": "A"
+  },
+  {
+    "productId": "64953cded88a7442e43cb23h",
+    "productName": "Product B",
+    "productStatus": "A",
+    "productPrice": 20,
+    "productQuantity": 12,
+    "categoryName": "A",
+    "brandName": "A"
+  },
+  {
+    "productId": "64953cded88a7442e43cb23k",
+    "productName": "Product C",
+    "productStatus": "A",
+    "productPrice": 20,
+    "productQuantity": 12,
+    "categoryName": "A",
+    "brandName": "A"
+  }
+]

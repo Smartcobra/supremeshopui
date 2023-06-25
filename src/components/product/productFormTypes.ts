@@ -2,7 +2,7 @@
 //   [key: string]: string;
 // }
 
-import { IBrand, ICategory, IImageAndPrice, IProduct } from "./ProductModel";
+import { IBrand, ICategory, IImages, IProduct } from "./ProductModel";
 
 // export interface ProductFormPage {
 //   [key: string]: string | number | ICategory | IBrand | IProduct | IImageAndPrice;

@@ -10,9 +10,20 @@ interface ProductPage {
   productData: IProduct;
 }
 
+type ProductStatusOption = {
+  value: string;
+  label: string;
+};
+
 const ProductDetails: React.FC<ProductPage> = ({ productData }) => {
   const dispatch = useDispatch();
-  const { productName, productAlias, productType, fullDescription, productIMEI, shortDescription } = productData;
+  const { productName, productPrice, productStatus, productQuantity, productType, fullDescription, productIMEI, shortDescription } = productData;
+
+  const [selectedProductStatusOption, setProductStatusSelectedOption] = useState<ProductStatusOption | null>(null);
+  const productStatusoptions: ProductStatusOption[] = [
+    { value: "0", label: "Not Available" },
+    { value: "1", label: "Available" },
+  ];
 
   const handleNextPage = () => {
     dispatch(nextPage());
@@ -26,9 +37,19 @@ const ProductDetails: React.FC<ProductPage> = ({ productData }) => {
     dispatch(updateField({ page: "productDtls", field: "productName", value: e.target.value }));
   };
 
-  const handleProductAliasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // dispatch(updateField({ page: "page1", field: "categoryAlias", value: Number(e.target.value) }));
-    dispatch(updateField({ page: "productDtls", field: "productAlias", value: e.target.value }));
+  const handleCatStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    const productStatusOption = productStatusoptions.find((opt) => opt.value === value) || null;
+    setProductStatusSelectedOption(productStatusOption);
+    dispatch(updateField({ page: "productDtls", field: "productStatus", value: productStatusOption }));
+  };
+
+  const handleProductPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateField({ page: "productDtls", field: "productPrice", value: +e.target.value }));
+  };
+
+  const handleProductQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateField({ page: "productDtls", field: "productQuantity", value: +e.target.value }));
   };
 
   const handleProductTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,9 +87,16 @@ const ProductDetails: React.FC<ProductPage> = ({ productData }) => {
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control type="text" value={productName} onChange={handleProductNameChange} placeholder="Product Name" />
               </Form.Group>
-              <Form.Group as={Col} md="6" controlId="productFormProductAlias">
-                <Form.Label>Product Alias</Form.Label>
-                <Form.Control type="text" value={productAlias} onChange={handleProductAliasChange} placeholder="Product Alias" />
+              <Form.Group as={Col} md="6" controlId="productStatus">
+                <Form.Label>Product Status</Form.Label>
+                <Form.Select aria-label="Product Status" value={selectedProductStatusOption?.value || ""} onChange={handleCatStatusChange}>
+                  <option value="">-- Select --</option>
+                  {productStatusoptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </Form.Select>
               </Form.Group>
             </Row>
             <Row className="mb-3">
@@ -79,6 +107,16 @@ const ProductDetails: React.FC<ProductPage> = ({ productData }) => {
               <Form.Group as={Col} md="6" controlId="productFormproductIMEI">
                 <Form.Label>Product IMEI</Form.Label>
                 <Form.Control type="text" value={productIMEI} onChange={handleProductIMIEChange} placeholder="Product IMEI" />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} md="6" controlId="productQuantity">
+                <Form.Label>Product Quantity</Form.Label>
+                <Form.Control type="text" value={productQuantity} onChange={handleProductQuantityChange} placeholder="Product Quantity" />
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="productPrice">
+                <Form.Label>Product Price</Form.Label>
+                <Form.Control type="text" value={productPrice} onChange={handleProductPriceChange} placeholder="Product Price" />
               </Form.Group>
             </Row>
 

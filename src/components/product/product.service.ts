@@ -1,47 +1,19 @@
 import axios from "axios";
-import { IProduct, IProductRequest } from "./ProductModel";
+import { IProduct, IProductRequest, ProductCreateRequest, ProductDtlRequest, ProductImageRequest } from "./ProductModel";
 
 export class ProductService {
-  // private static createCatUrl: string = "http://localhost:5016/categories";
-  // private static getCatUrl: string = "http://localhost:5016/categories";
-
   private static createProductUrl: string = "http://localhost:5023/products";
-  private static getCatUrl: string = "http://3.7.96.250:5012/gateway-catg-sv/categories";
-  /**
-       @usage : to get all contacts
-       @method : POST
-       @body : IAuthModel
-       @url : https://iam.supremeshope.com/oauth2/token
-       */
+  private static getAllProductsUrl: string = "http://localhost:5023/products";
 
-  public static createProduct(productModel: IProductRequest): Promise<{ data: any }> {
-    const product = { productRequest: productModel };
+  public static createProduct(formData: FormData): Promise<{ data: any }> {
+    const choice = formData.get("data") as string;
+    console.log("data for post call", choice);
 
-    // for (let i = 0; i < files.length; i++) {
-    //   productCreateRequest.append('files', files[i]);
-    // }
-
-    console.log("zssadasd----Productmodel", JSON.stringify(product));
-    return axios.post(this.createProductUrl, productModel);
+    return axios.post(this.createProductUrl, formData);
   }
 
-  //   public static getCategory(): Promise<{ data: ICategoryRsponse[] }> {
-  //     return axios.get(this.getCatUrl);
-  //   }
-
-  //   public static getCategoryById(catId: number): Promise<{ data: ICategoryRsponse[] }> {
-  //     console.log("in service", catId);
-  //     return axios.get(`${this.getCatUrl}/${catId}`);
-  //   }
-
-  //   public static updateCategory(categoryModel: ICategoryModel): Promise<{ data: any }> {
-  //     console.log("zssadasd----categoryModel", JSON.stringify(categoryModel));
-  //     return axios.put(this.createCatUrl, categoryModel);
-  //   }
-
-  //   public static deleteCategoryById(catId: number): Promise<{ data: any }> {
-  //     console.log("in delete service", typeof catId);
-  //     console.log("in delete service", catId);
-  //     return axios.delete(`${this.getCatUrl}/${catId}`);
-  //   }
+  public static getAllProducts(): Promise<{ data: any }> {
+    console.log("data for all product call");
+    return axios.get(this.getAllProductsUrl);
+  }
 }

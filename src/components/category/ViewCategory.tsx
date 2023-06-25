@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import Table from "react-bootstrap/Table";
 import { AppDispatch, RootState, useAppDispatch } from "../../redux/store";
 import * as categoryReducer from "../../redux/category/category.reducer";
 import * as categoryAction from "../../redux/category/category.actions";
