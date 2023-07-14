@@ -6,6 +6,7 @@ export interface ICategory {
 
 export interface IBrand {
   brandName: string;
+  brandDesc: string;
 }
 
 export interface IProduct {
@@ -14,8 +15,8 @@ export interface IProduct {
   shortDescription: string;
   fullDescription: string;
   productType: string;
-  productIMEI: string;
-  productPrice: number;
+  productModel: string;
+  productPrice?: string;
   productStatus: string;
 }
 
@@ -144,12 +145,66 @@ export interface ProductCreateRequest {
 }
 
 export interface ProductTableData {
-  productId: string;
-  productName: string;
-  productStatus: string;
-  productPrice: number;
-  productQuantity: number;
+  id: string;
   categoryName: string;
   brandName: string;
-  productDetails: any;
+  productName: string;
+  productPrice: number;
+  productQuantity: number;
+  productStatus: string;
+  productDescription: any;
+}
+
+export interface IProductDescription {
+  productDimensions?: string;
+  manufacturer?: string;
+  ASIN?: string;
+  itemModelNumber?: string;
+  countryOrigin?: string;
+  department?: string;
+  genericName?: string;
+  series?: string;
+  colour?: string;
+  processor?: string;
+  screenDisplaySize?: string;
+  resolution?: string;
+  ram?: string;
+  hardDriveSize?: string;
+  hardDiskDescription?: string;
+  audioDetails?: string;
+  averageBatteryLife?: string;
+  countryOfOrigin?: string;
+  weight?: string;
+  graphics?: string;
+  os?: string;
+  modelNo?: string;
+  batteryPowerRating?: string;
+  connectivityType?: string;
+  gps?: string;
+  specialFeature?: string;
+  frontCamera?: string;
+  rearCamera?: string;
+  batteries?: string;
+  callFacility?: string;
+  wattage?: string;
+  model?: string;
+  modelYear?: string;
+  displayTechnology?: string;
+  viewingAngle?: string;
+  audioOutputMode?: string;
+  voltage?: string;
+  standingScreenDisplaySize?: string;
+  supportBluetooth?: string;
+  imageAspectRatio?: string;
+}
+
+export interface CategoriesDrpDnDTO {
+  catId: string;
+  parentId: string;
+  categories: string;
+}
+
+export interface BrandsDrpDnDTO {
+  brandId: string;
+  brandName: string;
 }

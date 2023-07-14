@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./product.css";
 import { Container, Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -7,25 +7,33 @@ import Card from "react-bootstrap/Card";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import * as productAction from "../../redux/product/product.action";
 import { nextPage, previousPage, updateField } from "../../redux/product/product.reducer";
+import * as productReducer from "../../redux/product/product.reducer";
 import { IBrand } from "./ProductModel";
 
 interface BrandPage {
   brandData: IBrand;
 }
 const BrandDetails: React.FC<BrandPage> = ({ brandData }) => {
-  const dispatch = useDispatch();
-  const { brandName } = brandData;
+  const productReduxState: productReducer.InitialState = useSelector((state: RootState) => {
+    return state[productReducer.productFeatureKey];
+  });
 
-  const handleBrandNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { brandDrDnData } = productReduxState;
+  const dispatch = useDispatch();
+  const { brandName, brandDesc } = brandData;
+
+  useEffect(() => {
+    dispatch(productAction.getAllBrandsAction());
+  }, [dispatch]);
+
+  const handleBrandNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(updateField({ page: "brandDtls", field: "brandName", value: e.target.value }));
   };
 
-  const handleBrandLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files ? event.target.files[0] : null;
-      //dispatch(updateField({ page: "images", field: "brandLogo", value: file }));
-    }
+  const handleBrandDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateField({ page: "brandDtls", field: "brandDesc", value: e.target.value }));
   };
 
   const handleNextPage = () => {
@@ -47,14 +55,20 @@ const BrandDetails: React.FC<BrandPage> = ({ brandData }) => {
         <Card style={{ width: "60rem" }}>
           <Card.Body>
             <Card.Title style={{ marginLeft: "14rem", marginBottom: "2rem" }}></Card.Title>
-
-            <Form.Group className="mb-3" controlId="productFormBrandName">
+            <Form.Group className="mb-3" controlId="productFormCategoryName">
               <Form.Label>Brand Name</Form.Label>
-              <Form.Control type="text" value={brandName} onChange={handleBrandNameChange} placeholder="Brand Name" />
+              <Form.Select onChange={handleBrandNameChange}>
+                <option value="">Select one Category</option>
+                {brandDrDnData.map((brand) => (
+                  <option key={brand.brandId} value={brand.brandName}>
+                    {brand.brandName}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="productFormBrandLogo">
-              <Form.Label>Brand logo</Form.Label>
-              <Form.Control type="file" onChange={handleBrandLogoChange} placeholder="Brand Logo" />
+            <Form.Group className="mb-3" controlId="productFormBrandName">
+              <Form.Label className="textBold">Brand Description</Form.Label>
+              <Form.Control type="text" value={brandDesc} onChange={handleBrandDescChange} placeholder="Brand Description" />
             </Form.Group>
 
             <Container>

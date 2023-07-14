@@ -68,9 +68,10 @@ const ViewCategory: React.FC = () => {
     {
       dataField: "actions",
       text: "Actions",
+      headerAlign: "center",
       formatter: actionFormatter,
       headerStyle: {
-        width: "170px",
+        width: "300px",
       },
     },
   ];
@@ -104,10 +105,10 @@ const ViewCategory: React.FC = () => {
   function actionFormatter(cell: any, row: any, rowIndex: any, formatExtraData: any) {
     return (
       <div style={{ textAlign: "center", cursor: "pointer", lineHeight: "normal" }}>
-        <Button onClick={() => navigate(`/editcategory/${row.categoryId}`)} variant="outline-warning">
+        <Button className="catbtnedit" onClick={() => navigate(`/editcategory/${row.categoryId}`)} variant="outline-warning">
           <TbEdit />
         </Button>{" "}
-        <Button onClick={() => deleteCategory(row.categoryId)} variant="outline-danger">
+        <Button className="catbtndlt" onClick={() => deleteCategory(row.categoryId)} variant="outline-danger">
           <AiFillDelete />
         </Button>
       </div>
@@ -126,54 +127,14 @@ const ViewCategory: React.FC = () => {
   return (
     <>
       <Container className="mt-3">
-        <BootstrapTable keyField="categoryId" data={categories} columns={columns} pagination={paginationFactory(options)} />
-        {/* <Row>
-        <Col xs={10}>
-          <Card className="shadow-lg">
-            <Card.Header className="bg-dark text-white">
-              <p className="h4">Category Items</p>
-            </Card.Header>
-            <Card.Body className="bg-light-grey">
-              <Table striped hover className="text-center">
-                <thead className="bg-warning">
-                  <tr>
-                    <th>#</th>
-                    <th>Category ID</th>
-                    <th>Category Name</th>
-                    <th>Category Alias</th>
-                    <th>Parent Category ID</th>
-                    <th>Category Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {categories &&
-                    categories.map((category, index) => {
-                      return (
-                        <tr key={category.categoryId}>
-                          <td align="left">{index + 1}</td>
-                          <td>{category.categoryId}</td>
-                          <td align="left">{category.categoryName}</td>
-                          <td align="left">{category.categoryAlias}</td>
-                          <td>{category.parentCategoryId}</td>
-                          <td align="left">{getAvailable(category.categoryActive)}</td>
-                          <td align="left">
-                            <Button onClick={() => navigate(`/editcategory/${category.categoryId}`)} variant="outline-warning">
-                              <TbEdit />
-                            </Button>{" "}
-                            <Button variant="outline-danger">
-                              <AiFillDelete />
-                            </Button>{" "}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row> */}
+        <Card className="text-center" style={{ width: "81rem", marginBottom: "4px", height: "4rem" }}>
+          <Card.Body>
+            <h1>CATEGORY DETAILS</h1>
+          </Card.Body>
+        </Card>
+        <Card className="shadow-lg">
+          <BootstrapTable keyField="categoryId" data={categories} columns={columns} pagination={paginationFactory(options)} />
+        </Card>
       </Container>
     </>
   );

@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./product.css";
 import { useDispatch } from "react-redux";
-import { nextPage, updateField } from "../../redux/product/product.reducer";
+import { nextPage, updateField, updatePrentId } from "../../redux/product/product.reducer";
+import * as productReducer from "../../redux/product/product.reducer";
+import * as productAction from "../../redux/product/product.action";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Dropdown, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { ICategory } from "./ProductModel";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import ShowModal from "../util/ShowModal";
 
 type Option = {
   value: string;
@@ -18,6 +23,16 @@ interface CategoryPage {
 }
 
 const CategoryDetails: React.FC<CategoryPage> = ({ catData }) => {
+  const productReduxState: productReducer.InitialState = useSelector((state: RootState) => {
+    return state[productReducer.productFeatureKey];
+  });
+
+  const { catDrDnData, modalContent } = productReduxState;
+  console.log("----------------------------------", modalContent);
+  let catMap = new Map<string, string>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalCnt, setModalContent] = useState("");
+
   const dispatch = useDispatch();
   const { categoryName, categoryAlias, categoryStatus } = catData;
 
@@ -27,8 +42,28 @@ const CategoryDetails: React.FC<CategoryPage> = ({ catData }) => {
     { value: "1", label: "Available" },
   ];
 
-  const handleCatNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateField({ page: "categoryDtls", field: "categoryName", value: e.target.value }));
+  useEffect(() => {
+    dispatch(productAction.getAllCategoriesAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (modalContent) {
+      setIsModalOpen(true);
+      setModalContent(modalContent);
+    }
+  }, [modalContent]);
+
+  useEffect(() => {
+    catMap = new Map(catDrDnData.map((i) => [i.categories, i.parentId]));
+  }, [catDrDnData]);
+
+  const handleCatNameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log("parent------------", catMap);
+    const value = e.target.value;
+    let parentId = catMap.get(value);
+    console.log("parent------------", parentId);
+    dispatch(updatePrentId({ parentId }));
+    dispatch(updateField({ page: "categoryDtls", field: "categoryName", value: value }));
   };
 
   const handleCatAliasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +81,10 @@ const CategoryDetails: React.FC<CategoryPage> = ({ catData }) => {
     dispatch(nextPage());
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Container className="mt-5">
@@ -60,7 +99,16 @@ const CategoryDetails: React.FC<CategoryPage> = ({ catData }) => {
             <Row className="mb-3">
               <Form.Group className="mb-3" controlId="productFormCategoryName">
                 <Form.Label>Category Name</Form.Label>
-                <Form.Control type="text" value={categoryName} onChange={handleCatNameChange} placeholder="Category Name" />
+                <Form.Select onChange={handleCatNameChange}>
+                  <option value="">Select one Category</option>
+                  {catDrDnData
+                    .filter((cat) => cat.parentId !== "0")
+                    .map((cat) => (
+                      <option key={cat.catId} value={cat.categories}>
+                        {cat.categories}
+                      </option>
+                    ))}
+                </Form.Select>
               </Form.Group>
               <Form.Group className="mb-3" controlId="productFormCategoryAlias">
                 <Form.Label>Category Alias</Form.Label>
@@ -90,6 +138,7 @@ const CategoryDetails: React.FC<CategoryPage> = ({ catData }) => {
           </Card.Body>
         </Card>
       </Container>
+      <ShowModal isOpen={isModalOpen} onRequestClose={closeModal} content={modalContent} headername="Create Product" />
     </>
   );
 };

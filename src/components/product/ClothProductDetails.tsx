@@ -26,7 +26,7 @@ const ClothProductDetails: React.FC = () => {
       ...clothModel,
       [event.target.name]: event.target.value,
     });
-    dispatch(updatePage4Field({ page: "productCompleteDtls", field: "clothDeatils", value: clothModel }));
+    // dispatch(updatePage4Field({ page: "productCompleteDtls", field: "clothDeatils", value: clothModel }));
   };
 
   const handleNextPage = () => {

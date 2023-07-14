@@ -7,9 +7,10 @@ import { Container, Col, Row, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { IBrand, ICategory, IImages, IProduct, ProductCreateRequest, ProductDtlRequest, ProductImageRequest } from "./ProductModel";
+import { ProductDtlRequest } from "./ProductModel";
 import * as productReducer from "../../redux/product/product.reducer";
 import * as productAction from "../../redux/product/product.action";
+import ShowModal from "../util/ShowModal";
 
 const ImageDetails: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,6 @@ const ImageDetails: React.FC = () => {
   const productReduxState: productReducer.InitialState = useSelector((state: RootState) => {
     return state[productReducer.productFeatureKey];
   });
-
-  // const { productRequest } = productReduxState;
-  // console.log("dataIImagePagetatatat", productRequest);
 
   const { data, imageData } = productReduxState;
   console.log("data to send----------", data);
@@ -29,16 +27,27 @@ const ImageDetails: React.FC = () => {
     dispatch(previousPage());
   };
 
+  const sanitize = (obj: any) => {
+    return JSON.parse(
+      JSON.stringify(obj, (key, value) => {
+        return value === "" ? undefined : value;
+      })
+    );
+  };
+
   const handleSubmitForm = () => {
+    let tmpData = sanitize(data.productDescription);
+    console.log("-------------------", tmpData);
     let productDtlRequest: ProductDtlRequest = {
       productDetails: data.productDtls,
       category: data.categoryDtls,
       brand: data.brandDtls,
-      productDescription: data.productCompleteDtls,
+      productDescription: tmpData,
     };
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(productDtlRequest));
+
     const imageTemp = imageData.getAll("images");
     if (imageTemp) {
       for (let i = 0; i < imageTemp.length; i++) {
@@ -48,8 +57,9 @@ const ImageDetails: React.FC = () => {
     dispatch(productAction.createProductAction({ formData }))
       .then((response: any) => {
         if (response && !response.error) {
-          console.log("response-----handleSubmitForm---product-", response);
           console.log("response---------", response.payload.responseMessage);
+          let modalCntent = response.payload.responseMessage;
+          dispatch(productReducer.setModalContent(modalCntent));
         }
       })
       .catch((err: any) => {});

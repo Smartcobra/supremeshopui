@@ -28,3 +28,19 @@
 .textBold {
     font-weight: bold;
 }
+
+.containerStyle {
+    margin-top: 3rem;
+    margin-left: 10rem !important;
+}
+
+.productbutton.btn {
+    padding: 3px 30px !important;
+    background-color: rgb(51, 57, 71) !important;
+    color: aliceblue !important;
+}
+
+.productbutton:hover {
+    background-color: yellow !important;
+    color: rgb(51, 57, 71) !important;
+}

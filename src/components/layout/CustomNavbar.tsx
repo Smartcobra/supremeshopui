@@ -108,8 +108,10 @@ const CustomNavbar: React.FC<IProps> = (props) => {
                   <NavDropdown.Item href="/addproduct">Create Product</NavDropdown.Item>
                   <NavDropdown.Item href="/products">View Product</NavDropdown.Item>
                 </NavDropdown>
-
-                <Nav.Link href="/addbrand">Brand</Nav.Link>
+                <NavDropdown title="Brand" id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="/addbrand">Create Brand</NavDropdown.Item>
+                  <NavDropdown.Item href="/viewBrands">View Brands</NavDropdown.Item>
+                </NavDropdown>
                 <NavDropdown title="Category" id="collasible-nav-dropdown">
                   <NavDropdown.Item href="/addcategory">Create Category</NavDropdown.Item>
                   <NavDropdown.Item href="/viewcategory">View Category</NavDropdown.Item>
@@ -120,22 +122,7 @@ const CustomNavbar: React.FC<IProps> = (props) => {
         ) : (
           <></>
         )}
-
-        {/* <Navbar variant="dark" className="navbarheight">
-          <Container fluid>
-            <Navbar.Brand href="#nolink" onClick={handleShow}>
-              <i className="bi bi-sliders2"></i>
-            </Navbar.Brand>
-            <Nav className="me-auto">
-              <Nav.Link href="/addproduct">Product</Nav.Link>
-              <Nav.Link href="/addbrand">Brand</Nav.Link>
-              <NavDropdown title="Category" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/addcategory">Create Category</NavDropdown.Item>
-                <NavDropdown.Item href="/viewcategory">View Category</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Container>
-        </Navbar> */}
+        /
       </div>
 
       <Offcanvas show={show} onHide={handleClose}>

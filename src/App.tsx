@@ -1,5 +1,5 @@
 import "./App.css";
-import Brand from "./components/brand/Brand";
+import Brand from "./components/brand/CreateBrand";
 import Category from "./components/category/Category";
 import HomePage from "./components/home/HomePage";
 import Profile from "./components/auth/Profile";
@@ -16,10 +16,17 @@ import { AppDispatch, RootState, useAppDispatch } from "../src/redux/store";
 import * as productReducer from "../src/redux/product/product.reducer";
 import { useSelector } from "react-redux";
 import ViwAllProductList from "./components/product/ViewAllProducts";
+import CreateBrand from "./components/brand/CreateBrand";
+import ViewBrands from "./components/brand/ViewBrand";
 
 //currentPage, fields, setFieldValue, setPage
 
 const App: React.FC = () => {
+  const productReduxState: productReducer.InitialState = useSelector((state: RootState) => {
+    return state[productReducer.productFeatureKey];
+  });
+  const { data } = productReduxState;
+
   return (
     <>
       <BrowserRouter>
@@ -31,10 +38,12 @@ const App: React.FC = () => {
           <Route path={"/addproduct"} element={<CreateProduct />} />
           <Route path={"/products"} element={<ViwAllProductList />} />
           {/* <Route path={"/product/:productId"} element={<ProductDetails />} /> */}
-          <Route path={"/addbrand"} element={<Brand />} />
+          <Route path={"/addbrand"} element={<CreateBrand />} />
+          <Route path={"/viewbrands"} element={<ViewBrands />} />
           <Route path={"/addcategory"} element={<Category />} />
           <Route path={"/viewcategory"} element={<ViewCategory />} />
           <Route path={"/editcategory/:catId"} element={<EditCategory />} />
+          {/* <Route path={"/produccategory"} element={<CategoryDetails catData={data.categoryDtls} />} /> */}
           <Route path={"/help"} element={<Help />} />
         </Routes>
       </BrowserRouter>

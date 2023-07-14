@@ -23,7 +23,7 @@ const ShoeProductDeatils: React.FC = () => {
       ...shoeModel,
       [event.target.name]: event.target.value,
     });
-    dispatch(updatePage4Field({ page: "productCompleteDtls", field: "shoeDetails", value: shoeModel }));
+    // dispatch(updatePage4Field({ page: "productCompleteDtls", field: "shoeDetails", value: shoeModel }));
   };
 
   const handleNextPage = () => {

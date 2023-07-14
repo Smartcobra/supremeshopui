@@ -14,38 +14,40 @@ import ClothProductDetails from "./ClothProductDetails";
 import ShoeProductDeatils from "./ShoeProductDetails";
 import SmartWatchProductDetails from "./SmartWatchProductDeatils";
 import TVProductDetails from "./TVProductDetails";
+import ProductErrorPage from "./ErrorPage";
 
 const CreateProduct: React.FC = () => {
   const productReduxState: productReducer.InitialState = useSelector((state: RootState) => {
     return state[productReducer.productFeatureKey];
   });
 
-  const { loading, page, data } = productReduxState;
+  const { loading, page, data, parentId } = productReduxState;
   console.log("datatatatat", data);
   console.log("category Name", data.categoryDtls.categoryName);
 
   let categoryName = data.categoryDtls.categoryName;
+  let pageID = parentId;
   // useEffect(() => {
   //   categoryName = data.page1.categoryName;
   // }, [data]);
 
-  // console.log(categoryName, "categoryName---------------");
+  console.log(pageID, "pageID---------------");
   const renderPage = () => {
     console.log("-------Render Page Invoked--------");
-    if (categoryName === "laptop") {
-      return <LaptopProductDetails />;
-    } else if (categoryName === "mobile") {
-      return <MobileProdcutDetails />;
-    } else if (categoryName == "cloth") {
+    if (pageID === "21") {
+      return <LaptopProductDetails productDesc={data.productDescription} />;
+    } else if (pageID === "1") {
+      return <MobileProdcutDetails productDesc={data.productDescription} />;
+    } else if (pageID == "3") {
       return <ClothProductDetails />;
-    } else if (categoryName == "mobile") {
-      return <MobileProdcutDetails />;
-    } else if (categoryName == "shoe") {
+    } else if (pageID == "26") {
       return <ShoeProductDeatils />;
-    } else if (categoryName == "smart watch") {
+    } else if (pageID == "30") {
       return <SmartWatchProductDetails />;
-    } else if (categoryName == "TV") {
-      return <TVProductDetails />;
+    } else if (pageID == "2") {
+      return <TVProductDetails productDesc={data.productDescription} />;
+    } else if (!categoryName) {
+      return <ProductErrorPage />;
     }
   };
 

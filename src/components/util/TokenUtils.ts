@@ -25,7 +25,7 @@ export class TokenUtil {
 
   public static isLoggedIn() {
     const token = this.getToken();
-    //return !!token;
-    return true;
+    return !!token;
+    //return true;
   }
 }

@@ -58,11 +58,9 @@ const Category: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("category::", categoryModel);
     disPatch(createCategoryAction({ category: categoryModel }))
       .then((response: any) => {
         if (response && !response.error) {
-          console.log("response---------", response);
           console.log("response---------", response.payload.responseMessage);
           setIsModalOpen(true);
           setModalContent(response.payload.responseMessage);
@@ -131,28 +129,30 @@ const Category: React.FC = () => {
           </Col>
           <Col xs={3}>
             <div style={{ width: "500px", height: "500px", overflowY: "auto" }}>
-              <Table striped bordered hover>
-                {/* </Table>  <table className="table-fixed table table-responsive"> */}
-                <thead className="theadcolor">
-                  <tr>
-                    <th>#</th>
-                    <th>Category Name</th>
-                    <th>Parent Category Id</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {categories &&
-                    categories.map((category, index) => {
-                      return (
-                        <tr key={category.categoryId}>
-                          <td align="left">{index + 1}</td>
-                          <td align="left">{category.categoryName}</td>
-                          <td>{category.parentCategoryId}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </Table>
+              <Card>
+                <Card.Body>
+                  <Table striped bordered hover>
+                    {/* </Table>  <table className="table-fixed table table-responsive"> */}
+                    <thead className="theadcolor">
+                      <tr>
+                        <th>Category Name</th>
+                        <th>Parent Id</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {categories &&
+                        categories.map((category, index) => {
+                          return (
+                            <tr key={category.categoryId}>
+                              <td align="left">{category.categoryName}</td>
+                              <td>{category.parentCategoryId}</td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </Table>
+                </Card.Body>
+              </Card>
             </div>
           </Col>
         </Row>

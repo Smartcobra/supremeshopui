@@ -23,3 +23,25 @@ Table thead {
     color: rgb(238, 238, 214);
     background-color: rgb(90, 84, 28);
 }
+
+.catbtnedit.btn {
+    padding: 3px 30px !important;
+    background-color: rgb(51, 57, 71) !important;
+    color: aliceblue !important;
+}
+
+.catbtnedit:hover {
+    background-color: yellow !important;
+    color: rgb(51, 57, 71) !important;
+}
+
+.catbtndlt.btn {
+    padding: 3px 30px !important;
+    background-color: rgb(235, 13, 24) !important;
+    color: aliceblue !important;
+}
+
+.catbtndlt:hover {
+    background-color: rgb(233, 217, 217) !important;
+    color: rgb(241, 17, 35) !important;
+}

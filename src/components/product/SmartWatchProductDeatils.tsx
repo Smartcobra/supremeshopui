@@ -26,7 +26,7 @@ const SmartWatchProductDetails: React.FC = () => {
       ...watchModel,
       [event.target.name]: event.target.value,
     });
-    dispatch(updatePage4Field({ page: "productCompleteDtls", field: "smartWatchDtls", value: watchModel }));
+    // dispatch(updatePage4Field({ page: "productCompleteDtls", field: "smartWatchDtls", value: watchModel }));
   };
 
   const handleNextPage = () => {
